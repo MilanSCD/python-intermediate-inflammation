@@ -10,7 +10,7 @@ and each column represents a single day across all patients.
 import numpy as np
 
 
-def load_csv(filename):  
+def load_csv(filename):
     """Load a Numpy array from a CSV
 
     :param filename: Filename of CSV to load
@@ -31,9 +31,7 @@ def daily_max(data):
     :param data: A 2D data array with inflammation data
     (each row contains measurements for a single patient across all days).
         :returns: An array of max values of measurements for each day."""
-    
     return np.max(data, axis=0)
-
 
 def daily_min(data):
     """Calculate the daily min of a 2D inflammation data array.
@@ -52,10 +50,9 @@ def patient_normalise(data):
     """
     if np.any(data < 0):
         raise ValueError('Inflammation values should not be negative')
-    
-    max = np.nanmax(data, axis=1)
+    max_data = np.nanmax(data, axis=1)
     with np.errstate(invalid='ignore', divide='ignore'):
-        normalised = data / max[:, np.newaxis]
+        normalised = data / max_data[:, np.newaxis]
     normalised[np.isnan(normalised)] = 0
     normalised[normalised < 0] = 0
     return normalised
