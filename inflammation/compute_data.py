@@ -5,12 +5,17 @@ import glob
 import os
 import numpy as np
 
-from inflammation import models, views
+from inflammation import models
 
 class CSVDataSource:
+    """
+    Loads patient data with inflammation values from CSV files within a specified folder.
+    """
     def __init__(self, data_dir):
+        """
+        initialises the class with the directory of the CSV files
+        """
         self.data_dir = data_dir
-    
     def load_inflammation_data(self):
         """
         loads inflammation data from an inflammation file in the data directory
@@ -39,36 +44,21 @@ class JSONDataSource:
             raise ValueError(f"No inflammation data JSON files found in path {self.data_dir}")
         data = map(models.load_json, data_file_paths)
         return list(data)
-    
-
-
 
 def analyse_data(data_source):
     """Calculates the standard deviation by day between datasets.
-
     Gets all the inflammation data from CSV files within a directory,
     works out the mean inflammation value for each day across all datasets,
     then plots the graphs of standard deviation of these means."""
-    
     data = data_source.load_inflammation_data()
-    """
-    means_by_day = map(models.daily_mean, data)
-    means_by_day_matrix = np.stack(list(means_by_day))
-    daily_standard_deviation = np.std(means_by_day_matrix, axis=0)
-    """
     daily_standard_deviation = compute_standard_deviation_by_day(data)
-    """
-    graph_data = {
-        'standard deviation by day': daily_standard_deviation,
-    }
-    views.visualize(graph_data)
-    """
     return daily_standard_deviation
 
 def compute_standard_deviation_by_day(data):
-    # TODO
+    """
+    Computes the daily standard deviation
+    """
     means_by_day = map(models.daily_mean, data)
     means_by_day_matrix = np.stack(list(means_by_day))
     daily_standard_deviation = np.std(means_by_day_matrix, axis=0)
     return daily_standard_deviation
-
