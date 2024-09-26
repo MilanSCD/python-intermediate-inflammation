@@ -56,3 +56,8 @@ def patient_normalise(data):
     normalised[np.isnan(normalised)] = 0
     normalised[normalised < 0] = 0
     return normalised
+
+def standard_deviation(data):
+    """Computes and returns dictionary of standard deviation for data."""
+    result = np.std(data)
+    return {'standard deviation': result}
