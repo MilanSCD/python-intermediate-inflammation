@@ -85,6 +85,6 @@ def test_patient_normalise(test, expected, expect_raises):
 ])
 
 def test_daily_standard_deviation(data, expected_standard_deviation):
-    from inflammation.models import s_dev
-    result_data = s_dev(data)['standard deviation']
+    from inflammation.models import standard_deviation
+    result_data = standard_deviation(data)['standard deviation']
     npt.assert_approx_equal(result_data, expected_standard_deviation)
